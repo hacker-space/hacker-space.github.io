@@ -1,0 +1,55 @@
+{# Generates the main and basic menu from context data in the site's
+   configuration file.
+#}
+{% macro render_basic_menu() -%}
+{% for menu_item in menu %}
+    <a {% if (menu_item.url == resource.relative_path) %}class="selected" {% endif -%}
+        href="{{ content_url(menu_item.url) }}">{{ menu_item.title }}</a>
+{% endfor %}
+{%- endmacro %}
+
+
+{# Generates the advanced menu from all files located in the content/advanced
+   folder. Only advanced section files have 'index' metadata, so we can be
+   certain that no other files will creep in.
+#}
+{% macro render_advanced_menu() -%}
+{% for res in site.content.walk_resources_sorted_by_index() %}
+    <a {% if (res.url == resource.url) %}class="selected" {% endif -%}
+        href="{{ res.full_url }}">{{ res.meta.title }}</a>
+{% endfor %}
+{%- endmacro %}
+
+
+{# Advanced topics macro. Renders navigation at the end of an advanced
+   article. It also depends on 'index' metadata.
+#}
+{% macro render_bottom_article_nav() %}
+<div class="bottom_article_nav">
+{% if resource.next_by_index is not none -%}
+    <div class="next"><a href="{{ resource.next_by_index.full_url }}">
+    {{ resource.next_by_index.meta.title }}</a>
+    &gt;</div>
+{%- endif %}
+
+{% if resource.prev_by_index is not none -%}
+    <div class="prev">&lt; <a href="{{ resource.prev_by_index.full_url }}">
+    {{ resource.prev_by_index.meta.title }}</a>
+    </div>
+{%- endif %}
+</div>
+{% endmacro %}
+
+
+
+{% macro render_topics_list() -%}
+<div class='box'>
+  {% for res in site.content.walk_resources_sorted_by_index() %}
+    <label class="category1" for="">
+    <a href="{{ res.full_url }}">{{ res.meta.title }}</a>
+      <hr />
+      <small>{{res.meta.created}}</small>
+    </label>
+  {% endfor %}
+  </div>
+{%- endmacro %}

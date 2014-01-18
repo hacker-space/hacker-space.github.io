@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Hacker-Space Kerala</title>
+        <meta name="description" content="Hacker-Space Kerala website" />
+        <meta name="keywords" content="hackerspace, hacker-space, space kerala" />
+        <meta name="author" content="hackerspace" />
+        <link rel="shortcut icon" href="../favicon.ico"> 
+        <link rel="stylesheet" type="text/css" href="{{ media_url('css/default.css') }}" />
+        <script src="{{ media_url('js/modernizr.custom.js') }}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header class="clearfix">
+                <h1>Hacker Space<span>Kerala</span></h1>    
+                <nav class="codrops-demos">
+                    <nav>
+                        {% import "macros.j2" as macros with context %}
+                        {{ macros.render_basic_menu() }}
+                    </nav>
+                    <!-- <a class="current-demo" href="index.html">Projects -->
+                </nav>
+            </header>
+            <div class="main">
+                {{ macros.render_topics_list() }}
+                {% filter markdown -%}
+                {% block content %}{% endblock %}
+                {%- endfilter %}
+            </div>
+        </div>
+        {% if site.config.mode == "production" -%}
+            {% include "ga.j2" %}
+        {%- endif %}
+    </body>
+</html>
+            
