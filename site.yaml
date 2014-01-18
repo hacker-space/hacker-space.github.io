@@ -88,3 +88,9 @@ grouper:
 
 tagger:
     sorter: name
+
+publisher:
+    github:
+        type: hyde.ext.publishers.dvcs.Git
+        path: ../hacker-space.github.io
+        url: git@github.com:hacker-space/hacker-space.github.com.git
